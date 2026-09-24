@@ -1,20 +1,8 @@
-# Consegna
-
-# Crea una cartella progetto_completo con:
-
-#     calcolatrice.py (con tutte le funzioni).
-#     utility_casuali.py.
-#     main.py che permette di scegliere tra:
-#         Calcolatrice.
-#         Gioco del numero casuale.
-#         Lancio dado / estrazione nome.
-
-# main.py deve importare i moduli e delegare le operazioni.
-
 import random
 
 import calcolatrice
 import utility_casuali
+
 
 OPERAZIONI_DUE_NUMERI = {
     "+": calcolatrice.somma,
@@ -27,64 +15,81 @@ OPERAZIONI_DUE_NUMERI = {
 
 
 def menu_calcolatrice() -> None:
-    """Chiede operazione e numeri, poi delega il calcolo al modulo calcolatrice."""
+    """Ask for an operation and numbers, then delegate the calculation."""
 
-    # Mostro le operazioni disponibili e chiedo il numero corrispondente
-    print("1. Somma")
-    print("2. Sottrazione")
-    print("3. Moltiplicazione")
-    print("4. Divisione")
-    print("5. Potenza")
-    print("6. Resto")
-    print("7. Radice quadrata")
+    # Mostro le operazioni disponibili.
+    print("1. Addition")
+    print("2. Subtraction")
+    print("3. Multiplication")
+    print("4. Division")
+    print("5. Power")
+    print("6. Remainder")
+    print("7. Square root")
 
-    # Continuo a chiedere l'operazione finché non viene inserita correttamente
+    # Continuo a chiedere l'operazione finché non viene inserita correttamente.
     while True:
         try:
-            operazione = int(input("Scegli l'operazione: "))
+            operazione = int(input("Choose the operation: "))
 
-            if operazione >= 1 and operazione <= 7:
+            if 1 <= operazione <= 7:
                 break
 
-            print("Operazione non valida.")
+            print("Invalid operation.")
 
         except ValueError:
-            print("Inserisci un numero da 1 a 7.")
+            print("Enter a number from 1 to 7.")
 
-    # Continuo a chiedere il primo numero finché non viene inserito un numero
+    # Chiedo il primo numero e controllo la conversione.
     while True:
         try:
-            a = float(input("Primo numero: "))
-            break
-        except ValueError:
-            print("Inserisci un numero.")
+            a = float(input("First number: "))
 
+        except ValueError:
+            print("Enter a valid number.")
+
+        else:
+            break
+
+    # La radice quadrata richiede solamente il primo numero.
     if operazione == 7:
+
+        # Provo a calcolare la radice quadrata e gestisco un valore negativo.
         while True:
             try:
                 risultato = calcolatrice.radice_quadrata(a)
-                print(f"Risultato: {risultato}")
-                break
+
             except ValueError:
-                print("Non puoi calcolare la radice di un numero negativo.")
+                print("You cannot calculate the square root of a negative number.")
+
+                # Richiedo un nuovo numero dopo l'errore.
                 while True:
                     try:
-                        a = float(input("Inserisci un numero positivo: "))
-                        break
+                        a = float(input("Enter a non-negative number: "))
+
                     except ValueError:
-                        print("Inserisci un numero.")
+                        print("Enter a valid number.")
+
+                    else:
+                        break
+
+            else:
+                print(f"Result: {risultato}")
+                break
+
+            finally:
+                print("Square root calculation attempt completed.")
 
     else:
-        # Continuo a chiedere il secondo numero finché non viene inserito correttamente
+        # Chiedo il secondo numero e controllo la conversione.
         while True:
             try:
-                b = float(input("Secondo numero: "))
+                b = float(input("Second number: "))
 
-                # Controllo divisione e resto per evitare il divisore zero
+                # Controllo divisione e resto per evitare il divisore zero.
                 if (operazione == 4 or operazione == 6) and b == 0:
-                    print("Il divisore non può essere zero.")
-                    continue
+                    raise ZeroDivisionError("zero divisor")
 
+                # Scelgo la funzione da eseguire in base all'operazione.
                 if operazione == 1:
                     risultato = calcolatrice.somma(a, b)
 
@@ -103,104 +108,133 @@ def menu_calcolatrice() -> None:
                 elif operazione == 6:
                     risultato = calcolatrice.resto(a, b)
 
-                print(f"Risultato: {risultato}")
+            except ValueError:
+                print("Enter a valid number.")
+
+            except ZeroDivisionError:
+                print("The divisor cannot be zero.")
+
+            else:
+                print(f"Result: {risultato}")
                 break
 
-            except ValueError:
-                print("Inserisci un numero.")
-            except ZeroDivisionError:
-                print("Il divisore non può essere zero.")
+            finally:
+                print("Calculation attempt completed.")
 
 
 def gioco_numero() -> None:
-    """Gioco: indovina il numero pensato dal computer tra 1 e 100."""
+    """Play a game in which the user guesses a random number from 1 to 100."""
 
+    # Genero il numero segreto.
     segreto = random.randint(1, 100)
     tentativi = 0
 
-    print("Ho pensato un numero tra 1 e 100.")
+    print("I have chosen a number between 1 and 100.")
 
+    # Continuo a chiedere tentativi finché l'utente non indovina.
     while True:
         try:
-            tentativo = int(input("Tuo tentativo: "))
+            tentativo = int(input("Your guess: "))
 
-            # Controllo che il numero sia compreso tra 1 e 100
+            # Controllo che il numero sia compreso tra 1 e 100.
             if tentativo < 1 or tentativo > 100:
-                print("Inserisci un numero tra 1 e 100.")
-                continue
+                raise ValueError("number outside the allowed range")
 
         except ValueError:
-            print("Inserisci un numero intero.")
+            print("Enter an integer between 1 and 100.")
             continue
 
-        tentativi += 1
-
-        if tentativo < segreto:
-            print("Troppo basso!")
-        elif tentativo > segreto:
-            print("Troppo alto!")
         else:
-            print(f"Hai indovinato in {tentativi} tentativi!")
-            break
+            tentativi += 1
+
+            if tentativo < segreto:
+                print("Too low!")
+
+            elif tentativo > segreto:
+                print("Too high!")
+
+            else:
+                print(f"You guessed it in {tentativi} attempts!")
+                break
+
+        finally:
+            print("Guess attempt completed.")
 
 
 def menu_casuali() -> None:
-    """Lancio del dado, estrazione di un nome o password, tramite utility_casuali."""
+    """Handle dice, name extraction, and password generation."""
 
-    # Mostro le operazioni disponibili e chiedo il numero corrispondente
-    print("1. Lancia il dado")
-    print("2. Estrai un nome")
-    print("3. Genera una password")
+    # Mostro le operazioni disponibili.
+    print("1. Roll the dice")
+    print("2. Pick a name")
+    print("3. Generate a password")
 
-    # Continuo a chiedere la scelta finché non viene inserita correttamente
+    # Continuo a chiedere la scelta finché non viene inserita correttamente.
     while True:
         try:
-            scelta = int(input("Scegli cosa vuoi fare: "))
+            scelta = int(input("Choose what you want to do: "))
 
             if scelta == 1:
-                print(f"Hai ottenuto: {utility_casuali.lancia_dado()}")
-                break
+                print(f"Result: {utility_casuali.lancia_dado()}")
 
             elif scelta == 2:
                 nomi = ["Anna", "Luca", "Giulia", "Marco", "Sara"]
-                print(f"Nome estratto: {utility_casuali.estrai_nome(nomi)}")
-                break
+                print(
+                    f"Selected name: "
+                    f"{utility_casuali.estrai_nome(nomi)}"
+                )
 
             elif scelta == 3:
-                # Continuo a chiedere la lunghezza finché non viene inserito un numero
+
+                # Continuo a chiedere la lunghezza finché non è valida.
                 while True:
                     try:
-                        lunghezza = int(input("Lunghezza della password: "))
+                        lunghezza = int(input("Password length: "))
 
-                        if lunghezza > 0:
-                            break
-
-                        print("La lunghezza deve essere maggiore di zero.")
+                        if lunghezza <= 0:
+                            raise ValueError("length must be positive")
 
                     except ValueError:
-                        print("Inserisci un numero intero.")
+                        print("Enter a positive integer.")
 
-                print(f"Password: {utility_casuali.genera_password(lunghezza)}")
-                break
+                    else:
+                        print(
+                            f"Password: "
+                            f"{utility_casuali.genera_password(lunghezza)}"
+                        )
+                        break
+
+                    finally:
+                        print("Password length check completed.")
 
             else:
-                print("Scelta non valida.")
+                print("Invalid choice.")
+
+            if scelta in (1, 2, 3):
+                break
 
         except ValueError:
-            print("Inserisci un numero da 1 a 3.")
+            print("Enter a number from 1 to 3.")
+
+        else:
+            print("Operation completed.")
+
+        finally:
+            print("Menu operation attempt completed.")
 
 
 def main() -> None:
-    """Mostra il menu principale e delega alle funzioni giuste."""
+    """Display the main menu and delegate each option to the proper function."""
 
+    # Mostro il menu principale.
     while True:
         print("\n=== MENU ===")
-        print("1. Calcolatrice")
-        print("2. Gioco del numero casuale")
-        print("3. Dado / estrazione nome / password")
-        print("0. Esci")
+        print("1. Calculator")
+        print("2. Random number game")
+        print("3. Dice / name extraction / password")
+        print("0. Exit")
 
-        scelta = input("Scelta: ").strip()
+        scelta = input("Choice: ").strip()
 
         if scelta == "1":
             menu_calcolatrice()
@@ -212,11 +246,11 @@ def main() -> None:
             menu_casuali()
 
         elif scelta == "0":
-            print("Arrivederci!")
+            print("Goodbye!")
             break
 
         else:
-            print("Scelta non valida. Inserisci 1, 2, 3 oppure 0")
+            print("Invalid choice. Enter 1, 2, 3, or 0.")
 
 
 if __name__ == "__main__":

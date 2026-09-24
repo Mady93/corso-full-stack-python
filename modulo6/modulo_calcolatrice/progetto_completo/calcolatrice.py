@@ -1,64 +1,68 @@
 import math
 
+
 def somma(a: float, b: float) -> float:
-    """Restituisce la somma di a e b."""
+    """Return the sum of a and b."""
     return a + b
- 
- 
+
+
 def sottrai(a: float, b: float) -> float:
-    """Restituisce la differenza tra a e b (a - b)."""
+    """Return the difference between a and b."""
     return a - b
- 
- 
+
+
 def moltiplica(a: float, b: float) -> float:
-    """Restituisce il prodotto di a e b."""
+    """Return the product of a and b."""
     return a * b
- 
- 
+
+
 def dividi(a: float, b: float) -> float:
-    """Restituisce il quoziente di a diviso b.
-    
-    Solleva ZeroDivisionError se b è uguale a zero.
+    """Return the quotient of a divided by b.
+
+    Raises ZeroDivisionError if b is zero.
     """
-    # Se il divisore è 0 sollevo io l'errore, con un messaggio chiaro
+    # Controllo che il divisore non sia zero.
     if b == 0:
-        raise ZeroDivisionError("divisione per zero non consentita")
-    # Altrimenti posso dividere senza problemi
+        raise ZeroDivisionError("division by zero is not allowed")
+
+    # Eseguo la divisione.
     return a / b
 
 
 def potenza(a: float, b: float) -> float:
-    """Restituisce a elevato alla b.
+    """Return a raised to the power of b.
 
-    Solleva ValueError se a è negativo e b non è un numero intero
-    (il risultato non sarebbe un numero reale).
+    Raises ValueError if a is negative and b is not an integer.
     """
-    # Base negativa con esponente non intero (es. (-8) ** 0.5): risultato non reale
+    # Controllo che una base negativa non abbia un esponente non intero.
     if a < 0 and b != int(b):
-        raise ValueError("base negativa con esponente non intero")
-    # L'operatore ** eleva a alla potenza b
+        raise ValueError("negative base with non-integer exponent")
+
+    # Eseguo la potenza.
     return a ** b
 
 
 def resto(a: float, b: float) -> float:
-    """Restituisce il resto della divisione di a per b.
+    """Return the remainder of a divided by b.
 
-    Solleva ZeroDivisionError se b è uguale a zero.
+    Raises ZeroDivisionError if b is zero.
     """
-    # Anche per il resto, il divisore non può essere zero
+    # Controllo che il divisore non sia zero.
     if b == 0:
-        raise ZeroDivisionError("resto con divisore zero non consentito")
-    # L'operatore % restituisce il resto della divisione
+        raise ZeroDivisionError("remainder with zero divisor is not allowed")
+
+    # Calcolo il resto della divisione.
     return a % b
 
 
 def radice_quadrata(a: float) -> float:
-    """Restituisce la radice quadrata di a.
+    """Return the square root of a.
 
-    Solleva ValueError se a è negativo.
+    Raises ValueError if a is negative.
     """
-    # Non esiste la radice quadrata reale di un numero negativo
+    # Controllo che il numero non sia negativo.
     if a < 0:
-        raise ValueError("radice quadrata di un numero negativo")
-    # math.sqrt calcola la radice quadrata
+        raise ValueError("square root of a negative number")
+
+    # Calcolo la radice quadrata.
     return math.sqrt(a)
