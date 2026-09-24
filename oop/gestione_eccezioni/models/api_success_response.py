@@ -6,7 +6,7 @@ T = TypeVar("T")
 
 
 @dataclass
-class ApiResponseSuccess(Generic[T]):
+class ApiSuccessResponse(Generic[T]):
     """Represent a successful response"""
 
     timestamp: str

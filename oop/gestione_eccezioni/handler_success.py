@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-from models.api_response_success import ApiResponseSuccess
+from models.api_success_response import ApiSuccessResponse
 
 
 def gestisci_successo(
@@ -25,7 +25,7 @@ def gestisci_successo(
         )
 
     # Creo il modello standard della risposta
-    risposta = ApiResponseSuccess(
+    risposta = ApiSuccessResponse(
         timestamp=timestamp,
         status=status,
         data=data,

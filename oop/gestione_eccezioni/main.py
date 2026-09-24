@@ -26,7 +26,7 @@ from exceptions.app_exception import (
     AppException,
     ValidationError,
 )
-from handler import gestisci_eccezione
+from handler_error import gestisci_eccezione
 from handler_success import gestisci_successo
 
 
