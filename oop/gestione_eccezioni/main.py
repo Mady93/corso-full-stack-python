@@ -29,6 +29,8 @@ from exceptions.app_exception import (
 from handler_error import gestisci_eccezione
 from handler_success import gestisci_successo
 
+from logger import logger
+
 
 def leggi_float(prompt: str, messaggio_errore: str) -> float:
     """Legge un numero decimale da input o lancia una ValidationError con messaggio personalizzato"""
@@ -44,6 +46,14 @@ def main() -> None:
     sys.excepthook = gestisci_eccezione
 
     conto = Conto("Mario Rossi", 100.0)
+
+    logger.info(
+        "logger.info: Conto creato per %s con saldo %.2f",
+        conto.intestatario,
+        conto.saldo,
+    )
+
+    print()
 
     while True:
         print()
@@ -74,6 +84,13 @@ def main() -> None:
 
                     conto.deposita(importo)
 
+                    logger.info(
+                        "logger.info: Deposito effettuato: %.2f",
+                        importo,
+                    )
+
+                    print()
+
                     gestisci_successo(
                         message="Deposit completed successfully",
                     )
@@ -87,11 +104,23 @@ def main() -> None:
 
                     conto.preleva(importo)
 
+                    logger.info(
+                        "logger.info: Prelievo effettuato: %.2f",
+                        importo,
+                    )
+
+                    print()
+
                     gestisci_successo(
                         message="Withdrawal completed successfully",
                     )
 
                 case 3:
+
+                    logger.info("logger.info: Saldo consultato")
+
+                    print()
+
                     gestisci_successo(
                         data={
                             "intestatario": conto.intestatario,
@@ -101,6 +130,11 @@ def main() -> None:
                     )
 
                 case 0:
+
+                    logger.info("logger.info: Applicazione terminata dall'utente")
+
+                    print()
+
                     gestisci_successo(
                         message="Goodbye!",
                     )
@@ -112,11 +146,28 @@ def main() -> None:
                     )
 
         except KeyboardInterrupt:
+
+            logger.warning(
+                "logger.warning: Applicazione interrotta dall'utente"
+            )
+
+            print()
+            
             interruzione = True
+
             print("\nGoodbye!")
             break
 
         except AppException as errore:
+
+            logger.error(
+                "Errore durante l'operazione: %s",
+                errore,
+            )
+
+
+            print()
+
             # Tutte le eccezioni (sia da leggi_float che da Conto) arrivano qui!
             gestisci_eccezione(
                 type(errore),
