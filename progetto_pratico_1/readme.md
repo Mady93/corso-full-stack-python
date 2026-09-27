@@ -79,7 +79,7 @@ TODO → IN_PROGRESS → IN_REVIEW → DONE
 | `TODO` | Stato iniziale di ogni ticket |
 | `IN_PROGRESS` | Lavorazione in corso |
 | `IN_REVIEW` | In revisione |
-| `DONE` | Completato; decrementa automaticamente il carico del Developer. `DONE → DONE` è tollerato (vedi nota nelle [limitazioni note](#note-e-limitazioni-note)) |
+| `DONE` | Completato; decrementa automaticamente il carico del Developer. `DONE → DONE` è tollerato |
 
 Ogni cambio di stato è permesso solo all'assegnatario del ticket: il controllo (in `GestionaleJira.avanza_stato_ticket`) confronta l'autore dell'operazione con `ticket.assegnatario` prima di ogni transizione, non solo per alcuni stati.
 
