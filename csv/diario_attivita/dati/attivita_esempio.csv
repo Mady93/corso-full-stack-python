@@ -1,0 +1,9 @@
+id,data_ora,categoria,descrizione,durata_minuti
+1,2026-09-29 08:15,studio,Revisione degli appunti Python,45
+2,2026-09-29 09:10,sviluppo,Creazione del file diario.txt,30
+3,2026-09-29 10:00,pausa,Pausa breve,15
+4,2026-09-29 10:20,sviluppo,Esportazione delle attività in CSV,50
+5,2026-09-29 11:30,studio,Lettura della documentazione csv,35
+6,2026-09-30 08:30,studio,Esercizi su lettura file,40
+7,2026-09-30 09:20,sviluppo,Aggiunta della ricerca nel diario,55
+8,2026-09-30 10:30,verifica,Controllo dei file generati,20
