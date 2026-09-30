@@ -1,0 +1,18 @@
+--- REPORT FINALE ---
+
+EMAIL: 6 controllate, 2 valide, 4 non valide
+  ✘ erm -> Formato non valido
+  ✘  -> Input vuoto
+  ✘ erminio@o -> Formato non valido
+  ✘ eminio@gmail -> Formato non valido
+
+PASSWORD: 3 controllate, 1 valide, 2 non valide
+  ✘ password #1: Almeno 8 caratteri; Manca una maiuscola; Manca un numero; Manca un simbolo (!@#$%^&*)
+  ✘ password #2: Manca una maiuscola; Manca un simbolo (!@#$%^&*)
+
+TESTI: 1 analizzati
+  Testo 1: 58 parole, 9 frasi
+    email: info@azienda.it, supporto@azienda.it
+    telefono: +39 333 1234567
+    url: https://www.azienda.it/contatti.
+    data: 15/03/2026, 02/04/2026, 30/04/2026
