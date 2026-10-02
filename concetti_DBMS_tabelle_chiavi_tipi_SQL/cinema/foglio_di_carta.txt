@@ -1,0 +1,3 @@
+Film(id INTEGER (PK AUTOINCREMENT), titolo VARCHAR(100) NOT NULL, genere VARCHAR(50), durata INTEGER NOT NULL).Sale(id INTEGER (PK AUTOINCREMENT), nome_sala VARCHAR(50) UNIQUE NOT NULL, capienza INTEGER NOT NULL).
+Spettacoli(id INTEGER (PK AUTOINCREMENT), id_film INTEGER (FK - Film.id) NOT NULL, id_sala INTEGER (FK - Sale.id) NOT NULL, data_ora DATETIME NOT NULL, prezzo DECIMAL NOT NULL).
+Prenotazioni(id INTEGER (PK AUTOINCREMENT), id_spettacolo INTEGER (FK - Spettacoli.id) NOT NULL, nome_cliente VARCHAR(100) NOT NULL, posti INTEGER NOT NULL)

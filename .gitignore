@@ -49,3 +49,19 @@ pip-wheel-metadata/
 Thumbs.db
 
 logs/
+
+
+# Segreti e credenziali
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.*
+config_locale.py
+
+# Database locali e dump
+*.sql
+*.sqlite
+*.sqlite3
+*.db

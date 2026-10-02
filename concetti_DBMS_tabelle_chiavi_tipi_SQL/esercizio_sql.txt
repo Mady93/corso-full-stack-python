@@ -1,0 +1,103 @@
+----------------creazione database e tabelle----------------
+
+CREATE DATABASE IF NOT EXISTS corso_sql;
+SHOW DATABASES;
+USE corso_sql;
+
+
+
+
+
+---------------CANCELLAZIONE----------------
+DROP DATABASE corso_sql;
+
+DROP TABLE ordini;
+DROP TABLE clienti;
+---------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS clienti (
+    id INT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(50) NOT NULL,
+    citta VARCHAR(50) NULL,
+    CONSTRAINT pk_clienti PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS ordini (
+    id INT NOT NULL AUTO_INCREMENT,
+    cliente_id INT NOT NULL,
+    totale DECIMAL(10,2) NOT NULL,
+    CONSTRAINT pk_ordini PRIMARY KEY (id),
+    CONSTRAINT fk_ordini_clienti FOREIGN KEY (cliente_id)
+    REFERENCES clienti(id)
+);
+
+
+
+
+
+
+
+----------------dataset----------------
+----------------Gli id li genera MySQL----------------
+
+INSERT INTO clienti (nome, citta) VALUES
+('Anna', 'Palermo'),
+('Luca', 'Milano'),
+('Sara', 'Palermo');
+
+INSERT INTO ordini (cliente_id, totale) VALUES
+(1, 45.50),
+(2, 19.90),
+(1, 80.00);
+
+----------------Controllo----------------
+SELECT * FROM clienti;
+SELECT * FROM ordini;
+
+
+
+
+
+
+
+
+----------------mini esercizio----------------
+
+
+
+----------------Nomi dei clienti in ordine alfabetico----------------
+SELECT nome
+FROM clienti
+ORDER BY nome ASC;
+
+----------------Ordini superiori a 30----------------
+SELECT *
+FROM ordini
+WHERE totale > 30;
+
+----------------Aggiungere un nuovo cliente----------------
+INSERT INTO clienti (nome, citta)
+VALUES ('Marco', 'Roma');
+
+----------------Modificare la città di un cliente----------------
+UPDATE clienti
+SET citta = 'Napoli'
+WHERE id = 2;
+
+----------------Eliminare un ordine scelto----------------
+SELECT * FROM ordini WHERE id = 2;
+DELETE FROM ordini
+WHERE id = 2;
+
+----------------Ogni ordine insieme al nome del cliente----------------
+SELECT c.nome, o.id, o.totale
+FROM ordini AS o
+JOIN clienti AS c
+ON c.id = o.cliente_id;
+
+----------------Anche i clienti senza ordini (LEFT JOIN)----------------
+SELECT c.nome, o.id, o.totale
+FROM clienti AS c
+LEFT JOIN ordini AS o
+ON c.id = o.cliente_id;
